@@ -1,12 +1,14 @@
-import requests
 import pytest
+from clients.api_client import ApiClient
 
-BASE_URL = "https://api-v1.practicesoftwaretesting.com"
+@pytest.fixture(scope="session")
+def api_client():
+    return ApiClient()
+
 
 @pytest.fixture
-def product_response():
-    response = requests.get(f"{BASE_URL}/products",timeout=10)
-    return response
+def product_response(api_client):
+    return api_client.get_products()
 
 @pytest.fixture
 def first_product_id(product_response):
@@ -15,6 +17,5 @@ def first_product_id(product_response):
         return products
     
 @pytest.fixture
-def product_detail_response(first_product_id):
-    response = requests.get(f"{BASE_URL}/products/{first_product_id}",timeout=10)
-    return response
+def product_detail_response(api_client, first_product_id):
+    return api_client.get_product(first_product_id)

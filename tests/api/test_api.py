@@ -1,7 +1,5 @@
 import pytest
-import requests
 
-BASE_URL = "https://api-v1.practicesoftwaretesting.com"
 
 def test_products_api_returns_success(product_response):
     assert product_response.status_code == 200
@@ -22,8 +20,8 @@ def test_products_api_returns_product_data(product_response):
         assert isinstance(product["price"], (int, float))
     
 
-def test_invalid_endpoint_returns_404():
-    response = requests.get(f"{BASE_URL}/invalid-endpoint-for-testing", timeout=10)
+def test_invalid_endpoint_returns_404(api_client):
+    response = api_client.get("/invalid-endpoint-for-testing")
     
     assert response.status_code == 404
     
@@ -40,8 +38,8 @@ def test_product_detail_api_returns_product_data(first_product_id,product_detail
     assert "category" in product
     assert "brand" in product
     
-def test_nonexistent_product_returns_404():
-    response = requests.get(f"{BASE_URL}/products/9999", timeout=10)
+def test_nonexistent_product_returns_404(api_client):
+    response = api_client.get("/products/9999")
     
     assert response.status_code == 404
     
