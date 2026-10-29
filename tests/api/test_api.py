@@ -50,3 +50,23 @@ def test_nonexistent_product_returns_404():
     response = requests.get(f"{BASE_URL}/products/9999", timeout=10)
     
     assert response.status_code == 404
+    
+def test_product_detail_contains_valid_nested_data():
+    response = requests.get(f"{BASE_URL}/products/1", timeout=10)
+    
+    assert response.status_code == 200
+    
+    product = response.json()
+    
+    assert isinstance(product["category"],dict)
+    assert "id" in product["category"]
+    assert "name" in product["category"]
+    
+    assert isinstance(product["brand"], dict)
+    assert "id" in product["brand"]
+    assert "name" in product["brand"]
+    
+    assert isinstance(product["product_image"], dict)
+    assert "id" in product["product_image"]
+    assert "title" in product["product_image"]
+    
