@@ -7,7 +7,13 @@ authors = [
     { name = "prasna", email = "prasnabasnet18@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "playwright>=1.64.1",
+    "pytest>=9.2.0",
+    "pytest-html>=4.2.0",
+    "pytest-playwright>=0.10.0",
+    "requests>=2.34.2",
+]
 
 [project.scripts]
 practice-software-testing = "practice_software_testing:main"
@@ -15,3 +21,6 @@ practice-software-testing = "practice_software_testing:main"
 [build-system]
 requires = ["uv_build>=0.13.6,<0.14.0"]
 build-backend = "uv_build"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
