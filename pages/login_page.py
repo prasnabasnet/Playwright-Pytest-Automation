@@ -1,6 +1,9 @@
+import re
+
 from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
+
 
 class LoginPage(BasePage):
 
@@ -31,3 +34,9 @@ class LoginPage(BasePage):
     def verify_login_failed(self) -> None:
         expect(self.page.get_by_text("Invalid email or password")).to_be_visible()
         
+    def verify_login_sucessful(self)-> None:
+        expect(self.page).to_have_url(re.compile(r"/admin/dashboard"))
+        
+    def verify_required_fields_errors(self) -> None:
+        expect(self.page.get_by_text("Email is required")).to_be_visible()
+        expect(self.page.get_by_text("Password is required")).to_be_visible()
