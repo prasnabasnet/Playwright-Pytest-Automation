@@ -19,3 +19,7 @@ def first_product_id(product_response):
 @pytest.fixture
 def product_detail_response(api_client, first_product_id):
     return api_client.get_product(first_product_id)
+
+@pytest.fixture
+def login_response(api_client):
+    return api_client.login("customer@practicesoftwaretesting.com", "welcome01")

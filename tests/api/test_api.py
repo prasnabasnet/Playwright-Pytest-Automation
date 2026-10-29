@@ -60,3 +60,16 @@ def test_product_detail_contains_valid_nested_data(product_detail_response):
     assert "id" in product["product_image"]
     assert "title" in product["product_image"]
     
+
+def test_login_api_returns_token(login_response):
+    assert login_response.status_code == 200
+    
+    body = login_response.json()
+    
+    assert "access_token" in body
+    assert isinstance(body["access_token"], str)
+    assert len(body["access_token"]) > 0
+    
+def test_login_with_wrong_password_returns_401(api_client):
+    response = api_client.login("customer@practicesoftwaretesting.com", "wrongpassword")
+    assert response.status_code == 401
