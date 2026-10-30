@@ -29,4 +29,9 @@ def test_login_with_empty_fields(page):
     login_page.verify_required_fields_errors()
     expect(login_page.page).to_have_url(login_page.URL)
 
+def test_login_with_registered_user(page, registered_user):
+    login_page = LoginPage(page)
+    login_page.open()
     
+    login_page.login(registered_user["email"], registered_user["password"])
+    login_page.verify_customer_login_sucessful()
