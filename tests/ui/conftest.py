@@ -11,7 +11,7 @@ def registered_user(browser):
     email = f"test.user+{int(time.time())}@example.com"
     password = f"Aa1!{uuid.uuid4().hex}"
     
-    register_page = RegisterPage()
+    register_page = RegisterPage(page)
     register_page.open()
     register_page.register(
         first_name="Test",

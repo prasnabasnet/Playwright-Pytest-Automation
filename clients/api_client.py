@@ -19,5 +19,4 @@ class ApiClient:
     def post(self, path, json=None):
         return self.session.post(f"{self.base_url}{path}", json=json,timeout=10)
     
-    def login(self, email,password):
-        return self.post("/users/login",json={"email": email, "password": password})
+   
