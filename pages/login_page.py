@@ -42,4 +42,4 @@ class LoginPage(BasePage):
         expect(self.page.get_by_text("Password is required")).to_be_visible()
         
     def verify_customer_login_sucessful(self) -> None:
-        expect(self.page).to_have_url(re.complie(r"/account"))
+        expect(self.page).to_have_url(re.compile(r"/account"))

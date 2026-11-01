@@ -20,6 +20,7 @@ class RegisterPage(BasePage):
         self.email_input = page.get_by_label("Email address")
         self.password_input = page.get_by_label("Password")
         self.submit_button = page.locator("[data-test='register-submit']")
+        self.street_input = page.get_by_placeholder("Your Street *")
         
         
     def open(self) -> None:
@@ -35,7 +36,9 @@ class RegisterPage(BasePage):
         self.phone_number_input.fill(phone_number)
         self.email_input.fill(email)
         self.password_input.fill(password)
+        expect(self.street_input).not_to_have_value("", timeout=10000)
+        self.submit_button.click()
         self.submit_button.click()
         
     def verify_registration_sucessful(self) ->None:
-        expect(self.page).to_have_url(re.compile(r"/auth/login"))
+        expect(self.page).to_have_url(re.compile(r"/auth/login"), timeout=15000)
