@@ -38,3 +38,9 @@ def test_login_with_registered_user(page, registered_user):
     
     login_page.login(registered_user["email"], registered_user["password"])
     login_page.verify_customer_login_sucessful()
+    
+def test_saved_login_shows_user_in_menu(logged_in_page):
+    logged_in_page.goto("https://practicesoftwaretesting.com")
+    
+    expect(logged_in_page.get_by_role("button", name="Test User")).to_be_visible()
+    

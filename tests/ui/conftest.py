@@ -30,10 +30,25 @@ def registered_user(browser):
     context.close()
     return {"email": email,"password": password}
 
-@pytest.fixture
-def logged_in_page(page, registered_user):
+@pytest.fixture(scope="session")
+def auth_state(browser, registered_user, tmp_path_factory):
+    
+    #log in once per run and save the session to a file
+    context = browser.new_context()
+    page = context.new_page()
+    
     login_page = LoginPage(page)
     login_page.open()
-    login_page.login(registered_user['email'], registered_user['password'])
+    login_page.login(registered_user["email"], registered_user["password"])
     login_page.verify_customer_login_sucessful()
-    return page
+    
+    state_file = tmp_path_factory.mktemp("auth")/"state.json"
+    context.storage_state(path=str(state_file))
+    context.close()
+    return str(state_file)
+
+@pytest.fixture
+def logged_in_page(new_context, auth_state):
+    #Each test gets a fresh browser context with the logged-in state loaded
+    context = new_context(storage_state=auth_state)
+    return context.new_page()
