@@ -1,7 +1,10 @@
+import pytest
+
 from pages.checkout_page import CheckoutPage
 from pages.home_page import HomePage
 from pages.product_page import ProductPage
 
+@pytest.mark.smoke
 def test_checkout_process(logged_in_page):
     page = logged_in_page
     home_page = HomePage(page)

@@ -1,6 +1,6 @@
 import pytest
 
-
+@pytest.mark.smoke
 def test_products_api_returns_success(product_response):
     assert product_response.status_code == 200
 
