@@ -14,7 +14,7 @@ def test_add_product_to_cart(page):
     cart_page = CartPage(page)
     cart_page.verify_item_in_cart(product_name)
     
-def test_changing_qunatity_updates_line_price_and_total(page):
+def test_changing_quantity_updates_line_price_and_total(page):
     home_page= HomePage(page)
     home_page.open()
     home_page.open_first_product()
