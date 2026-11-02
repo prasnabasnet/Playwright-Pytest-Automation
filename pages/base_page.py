@@ -7,3 +7,8 @@ class BasePage:
 
     def navigate(self, url: str) -> None:
         self.page.goto(url)
+        
+    def open_cart(self) -> None:
+        self.page.locator("[data-test='nav-cart']").click()
+        
+    

@@ -33,7 +33,7 @@ class HomePage(BasePage):
         expect(self.no_results_message).to_be_visible()
         
     def open_first_product(self) -> str:
-        card = self.product_cards.first
+        card = self.product_cards.filter(has_not_text="Out of stock").first
         name = card.locator("[data-test='product-name']").inner_text().strip()
         card.click()
         return name
