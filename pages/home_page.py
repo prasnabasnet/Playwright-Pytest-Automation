@@ -11,6 +11,8 @@ class HomePage(BasePage):
         
         self.search_input = page.locator("[data-test='search-query']")
         self.product_cards = page.locator("a[data-test^='product-']")
+        self.no_results_message = page.get_by_text("There are no products found")
+        self.results_summary = page.get_by_text("0 products found for")
         
     def open(self) -> None:
         self.navigate(self.URL)
@@ -25,3 +27,14 @@ class HomePage(BasePage):
     def verify_search_results_contain(self, term: str) -> None:
         matching = self.product_cards.filter(has_text=re.compile(term, re.IGNORECASE))
         expect(matching.first).to_be_visible()
+        
+    def verify_no_results(self) -> None:
+        expect(self.results_summary).to_be_visible()
+        expect(self.no_results_message).to_be_visible()
+        
+    def open_first_product(self) -> str:
+        card = self.product_cards.first
+        name = card.locator("[data-test='product-name']").inner_text().strip()
+        card.click()
+        return name
+        
