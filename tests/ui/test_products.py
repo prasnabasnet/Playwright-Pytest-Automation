@@ -33,3 +33,14 @@ def test_clicking_product_opens_its_detail_page(page):
     
     product_page = ProductPage(page)
     product_page.verify_product_details(product_name)
+    
+@pytest.mark.parametrize(
+    "sort_value, descending",
+    [("price,asc", False), ("price,desc", True)]
+)
+def test_sort_by_price(page, sort_value, descending):
+    home_page = HomePage(page)
+    home_page.open()
+    
+    home_page.sort_by(sort_value)
+    home_page.wait_for_prices_sorted(descending=descending)
