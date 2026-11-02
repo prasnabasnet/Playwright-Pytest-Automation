@@ -16,3 +16,7 @@ class ProductPage(BasePage):
         expect(self.name).to_have_text(expected_name)
         expect(self.unit_price).to_be_visible()
         expect(self.add_to_cart_button).to_be_visible()
+        
+    def add_to_cart(self) -> None:
+        expect(self.add_to_cart_button).to_be_enabled(timeout=10000)
+        self.add_to_cart_button.click()
