@@ -1,7 +1,10 @@
+import pytest
+
 from pages.cart_page import CartPage
 from pages.home_page import HomePage
 from pages.product_page import ProductPage
 
+@pytest.mark.smoke
 def test_add_product_to_cart(page):
     home_page = HomePage(page)
     home_page.open()

@@ -1,3 +1,5 @@
+import pytest
+
 from pages.login_page import LoginPage
 from playwright.sync_api import expect
 
@@ -13,7 +15,8 @@ def test_login_with_invalid_credentials(page):
     
     login_page.login("invalid-user@example.com", "WrongPassword123!")
     login_page.verify_login_failed()
-    
+
+@pytest.mark.smoke    
 def test_login_with_valid_credentials(page):
     login_page = LoginPage(page)
     login_page.open()

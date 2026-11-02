@@ -1,6 +1,9 @@
+import pytest
+
 from pages.home_page import HomePage
 from pages.product_page import ProductPage
 
+@pytest.mark.smoke
 def test_home_page_shows_products(page):
     home_page = HomePage(page)
     home_page.open()
@@ -19,7 +22,7 @@ def test_search_with_no_matches_shows_message(page):
     home_page = HomePage(page)
     home_page.open()
     
-    home_page.search("zzzz")
+    home_page.search("zzzzqxqxqx")
     home_page.verify_no_results()
     
 def test_clicking_product_opens_its_detail_page(page):
