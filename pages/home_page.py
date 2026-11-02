@@ -43,6 +43,7 @@ class HomePage(BasePage):
         return name
     
     def sort_by(self, value: str) -> None:
+        expect(self.product_cards.first).to_be_visible()
         self.sort_select.select_option(value)
         
     def get_card_prices(self) -> list[Decimal]:
@@ -67,6 +68,7 @@ class HomePage(BasePage):
             self.page.wait_for_timeout(500)  
             
     def filter_by_category(self,name:str) -> None:
+        expect(self.product_cards.first).to_be_visible()
         self.page.get_by_role("checkbox", name=name, exact=True).check()
         
     def wait_for_all_products_to_contain(self, term: str, timeout: float = 10.0) -> list[str]:
