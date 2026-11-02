@@ -21,6 +21,7 @@ class HomePage(BasePage):
         self.navigate(self.URL)
         
     def search(self, term: str) -> None:
+        expect(self.product_cards.first).to_be_visible()
         self.search_input.fill(term)
         self.search_input.press("Enter")
         
@@ -64,3 +65,18 @@ class HomePage(BasePage):
                 direction = "descending" if descending else "ascending"
                 raise AssertionError(f"Prices were not sorted in {direction} order within {timeout} seconds: {prices}")
             self.page.wait_for_timeout(500)  
+            
+    def filter_by_category(self,name:str) -> None:
+        self.page.get_by_role("checkbox", name=name, exact=True).check()
+        
+    def wait_for_all_products_to_contain(self, term: str, timeout: float = 10.0) -> list[str]:
+        #After ticking a filter, keep checking until every card name contains the term 
+        deadline = time.monotonic() + timeout
+        while True:
+            names = self.product_cards.locator("[data-test='product-name']").all_inner_texts()
+            if names and all(term.lower() in n.lower() for n in names):
+                return names
+            if time.monotonic() > deadline:
+                raise AssertionError(f"Not every product contains '{term}': {names}")
+            self.page.wait_for_timeout(300)
+            

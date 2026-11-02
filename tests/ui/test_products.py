@@ -44,3 +44,12 @@ def test_sort_by_price(page, sort_value, descending):
     
     home_page.sort_by(sort_value)
     home_page.wait_for_prices_sorted(descending=descending)
+    
+def test_filter_by_category_shows_only_matching_products(page):
+    home_page = HomePage(page)
+    home_page.open()
+    
+    home_page.filter_by_category("Hammer")
+    
+    names = home_page.wait_for_all_products_to_contain("hammer")
+    assert len(names) > 0
