@@ -2,6 +2,7 @@ import uuid
 import time 
 import pytest
 from pages.register_page import RegisterPage
+from pages.login_page import LoginPage
 
 @pytest.fixture(scope="session")
 def registered_user(browser):
@@ -28,3 +29,11 @@ def registered_user(browser):
     
     context.close()
     return {"email": email,"password": password}
+
+@pytest.fixture
+def logged_in_page(page, registered_user):
+    login_page = LoginPage(page)
+    login_page.open()
+    login_page.login(registered_user['email'], registered_user['password'])
+    login_page.verify_customer_login_sucessful()
+    return page
