@@ -23,10 +23,21 @@ class CheckoutPage(BasePage):
         expect(self.proceed_from_sign_in_button).to_be_enabled(timeout=10000)
         self.proceed_from_sign_in_button.click()
         
-    def fill_billing_address(self, postal_code: str, house_number: str) -> None:
-        self.postal_code_input.fill(postal_code)
-        self.house_number_input.fill(house_number)
-        expect(self.proceed_to_payment_button).to_be_enabled(timeout=10000)
+    def fill_billing_address(self, house_number: str, retries: int = 3) -> None:
+        expect(self.postal_code_input).not_to_have_value("", timeout=10000)
+
+        for attempt in range(1, retries + 1):
+            self.house_number_input.fill(house_number)
+            try:
+                expect(self.house_number_input).to_have_value(house_number, timeout=3000)
+                expect(self.proceed_to_payment_button).to_be_enabled()
+                expect(self.house_number_input).to_have_value(house_number, timeout=1000)
+                break
+            except AssertionError:
+                if attempt == retries:
+                    raise
+                expect(self.postal_code_input).not_to_have_value("", timeout=10000)
+
         self.proceed_to_payment_button.click()
         
     def pay_with_method(self,method: str) -> None:
