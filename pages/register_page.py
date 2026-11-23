@@ -40,5 +40,14 @@ class RegisterPage(BasePage):
         self.submit_button.click()
         self.submit_button.click()
         
-    def verify_registration_sucessful(self) ->None:
+    def verify_registration_successful(self) ->None:
         expect(self.page).to_have_url(re.compile(r"/auth/login"), timeout=15000)
+        
+    def submit(self) -> None:
+        self.submit_button.click()
+
+    def verify_error(self, text: str | re.Pattern) -> None:
+        expect(self.page.get_by_text(text).first).to_be_visible(timeout=5000)
+
+    def verify_still_on_register_page(self) -> None:
+        expect(self.page).to_have_url(re.compile(r"/auth/register"))

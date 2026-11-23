@@ -22,7 +22,7 @@ def test_login_with_valid_credentials(page):
     login_page.open()
     
     login_page.login("admin@practicesoftwaretesting.com", "welcome01")
-    login_page.verify_login_sucessful()
+    login_page.verify_login_successful()
     
 def test_login_with_empty_fields(page):
     login_page = LoginPage(page)
@@ -37,7 +37,7 @@ def test_login_with_registered_user(page, registered_user):
     login_page.open()
     
     login_page.login(registered_user["email"], registered_user["password"])
-    login_page.verify_customer_login_sucessful()
+    login_page.verify_customer_login_successful()
     
 def test_saved_login_shows_user_in_menu(logged_in_page):
     logged_in_page.goto("https://practicesoftwaretesting.com")
