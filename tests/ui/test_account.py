@@ -34,7 +34,7 @@ def test_sign_out(page, registered_user):
     login_page = LoginPage(page)
     login_page.open()
     login_page.login(registered_user["email"], registered_user["password"])
-    login_page.verify_customer_login_sucessful()
+    login_page.verify_customer_login_successful()
     
     login_page.sign_out()
     

@@ -25,7 +25,7 @@ def registered_user(browser):
         email=email,
         password=password
     )
-    register_page.verify_registration_sucessful()
+    register_page.verify_registration_successful()
     
     context.close()
     return {"email": email,"password": password}
@@ -40,7 +40,7 @@ def auth_state(browser, registered_user, tmp_path_factory):
     login_page = LoginPage(page)
     login_page.open()
     login_page.login(registered_user["email"], registered_user["password"])
-    login_page.verify_customer_login_sucessful()
+    login_page.verify_customer_login_successful()
     
     state_file = tmp_path_factory.mktemp("auth")/"state.json"
     context.storage_state(path=str(state_file))

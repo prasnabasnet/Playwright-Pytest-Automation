@@ -34,12 +34,12 @@ class LoginPage(BasePage):
     def verify_login_failed(self) -> None:
         expect(self.page.get_by_text("Invalid email or password")).to_be_visible()
         
-    def verify_login_sucessful(self)-> None:
+    def verify_login_successful(self)-> None:
         expect(self.page).to_have_url(re.compile(r"/admin/dashboard"))
         
     def verify_required_fields_errors(self) -> None:
         expect(self.page.get_by_text("Email is required")).to_be_visible()
         expect(self.page.get_by_text("Password is required")).to_be_visible()
         
-    def verify_customer_login_sucessful(self) -> None:
+    def verify_customer_login_successful(self) -> None:
         expect(self.page).to_have_url(re.compile(r"/account"))
