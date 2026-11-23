@@ -11,4 +11,9 @@ class BasePage:
     def open_cart(self) -> None:
         self.page.locator("[data-test='nav-cart']").click()
         
-    
+    def open_account_menu(self) -> None:
+        self.page.locator("[data-test='nav-menu']").click()
+        
+    def sign_out(self) -> None:
+        self.open_account_menu()
+        self.page.locator("[data-test='nav-sign-out']").click()
